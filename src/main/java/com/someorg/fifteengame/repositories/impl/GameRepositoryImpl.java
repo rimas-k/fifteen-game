@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class GameRepositoryImpl implements GameRepository {
 
-    private final Map<String, Map<String, Game>> GAMES_MAP;
+    private final Map<GameIdentifier, Game> GAMES_MAP;
 
     private GameFactory gameFactory;
 
@@ -27,47 +27,35 @@ public class GameRepositoryImpl implements GameRepository {
     }
 
     @Override
-    public synchronized Game createGame(GameIdentifier gameIdentifier, int boardSize) throws GameAlreadyExistsException {
-        Map<String, Game> userGames = GAMES_MAP.get(gameIdentifier.getUserId());
-
-        if (userGames == null) {
-            userGames = new ConcurrentHashMap<>();
-            GAMES_MAP.put(gameIdentifier.getUserId(), userGames);
-        }
-
-        if (userGames.containsKey(gameIdentifier.getGameId())) {
+    public synchronized Game createGame(GameIdentifier gameIdentifier, int boardSize) {
+        if (GAMES_MAP.containsKey(gameIdentifier)) {
             throw new GameAlreadyExistsException("Game with specified ID already exists.");
         }
 
         Game game = gameFactory.createRandomGame(boardSize);
-        userGames.put(gameIdentifier.getGameId(), game);
+        GAMES_MAP.put(gameIdentifier, game);
 
         return game;
     }
 
     @Override
-    public Game fetchGame(GameIdentifier gameIdentifier) throws GameNotFoundException {
-        Game game = null;
-        Map<String, Game> userGames = GAMES_MAP.get(gameIdentifier.getUserId());
-
-        if (userGames != null) {
-            game = userGames.get(gameIdentifier.getGameId());
-        }
+    public Game fetchGame(GameIdentifier gameIdentifier) {
+        Game game = GAMES_MAP.get(gameIdentifier);
 
         if (game == null) {
-            throw new GameNotFoundException("Game with specified parameters was not found");
+            throw new GameNotFoundException("Game with specified identifier was not found");
         }
 
         return game;
     }
 
     @Override
-    public MoveResult moveTile(GameIdentifier gameIdentifier, String tileId) throws GameNotFoundException {
+    public MoveResult moveTile(GameIdentifier gameIdentifier, String tileLabel) {
         Game game = fetchGame(gameIdentifier);
         MoveResult result = MoveResult.ILLEGAL_MOVE;
 
         if (game != null) {
-            result = game.moveTileIntoBlankPosition(tileId);
+            result = game.moveTileIntoBlankPosition(tileLabel);
         }
 
         return result;

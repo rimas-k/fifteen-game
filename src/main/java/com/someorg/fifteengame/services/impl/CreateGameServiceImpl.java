@@ -4,7 +4,6 @@ import com.someorg.fifteengame.dto.CreateGameRequest;
 import com.someorg.fifteengame.model.GameIdentifier;
 import com.someorg.fifteengame.model.domain.Game;
 import com.someorg.fifteengame.repositories.GameRepository;
-import com.someorg.fifteengame.repositories.exceptions.GameAlreadyExistsException;
 import com.someorg.fifteengame.services.CreateGameService;
 import com.someorg.fifteengame.services.util.DTOConverter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,7 @@ public class CreateGameServiceImpl implements CreateGameService {
     }
 
     @Override
-    public com.someorg.fifteengame.dto.domain.Game createGame(CreateGameRequest request) throws GameAlreadyExistsException {
+    public com.someorg.fifteengame.dto.domain.Game createGame(CreateGameRequest request) {
         String userId = request.getUserId();
         String gameId = request.getGameId();
         int boardSize = request.getBoardSize();

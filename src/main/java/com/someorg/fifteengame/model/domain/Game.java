@@ -3,7 +3,6 @@ package com.someorg.fifteengame.model.domain;
 
 import com.someorg.fifteengame.common.MoveResult;
 import com.someorg.fifteengame.factories.impl.GameFactoryImpl;
-import lombok.AccessLevel;
 import lombok.Getter;
 
 import java.util.List;
@@ -18,10 +17,8 @@ public class Game {
     @Getter
     private List<Tile> tiles;
 
-    @Getter(AccessLevel.PROTECTED)
     private Map<String, Tile> tileLabelToTileMap;
 
-    @Getter(AccessLevel.PROTECTED)
     private Map<Tile.Position, Tile> tilePositionToTileMap;
 
     public Game(int boardSize, List<Tile> tiles) {
@@ -69,7 +66,7 @@ public class Game {
             String tileLabel = tile.getTileLabel();
 
             if (GameFactoryImpl.BLANK_TILE_LABEL.equals(tileLabel)) {
-                Tile.Position targetBlankPosition = getTargetBlankPosition();
+                Tile.Position targetBlankPosition = createTargetBlankPosition();
                 isGameComplete = isGameComplete && targetBlankPosition.equals(position);
             } else {
                 String targetTileLabel = createTargetTileLabelByPosition(position);
@@ -85,7 +82,7 @@ public class Game {
         return targetTileLabelNumber.toString();
     }
 
-    private Tile.Position getTargetBlankPosition() {
+    private Tile.Position createTargetBlankPosition() {
         Tile.Position position = new Tile.Position(boardSize - 1, boardSize - 1);
         return position;
     }

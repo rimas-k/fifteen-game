@@ -4,7 +4,6 @@ import com.someorg.fifteengame.dto.FetchGameRequest;
 import com.someorg.fifteengame.dto.domain.Game;
 import com.someorg.fifteengame.model.GameIdentifier;
 import com.someorg.fifteengame.repositories.GameRepository;
-import com.someorg.fifteengame.repositories.exceptions.GameNotFoundException;
 import com.someorg.fifteengame.services.FetchGameService;
 import com.someorg.fifteengame.services.util.DTOConverter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,7 @@ public class FetchGameServiceImpl implements FetchGameService {
     }
 
     @Override
-    public Game fetchGame(FetchGameRequest request) throws GameNotFoundException {
+    public Game fetchGame(FetchGameRequest request) {
         String userId = request.getUserId();
         String gameId = request.getGameId();
 
