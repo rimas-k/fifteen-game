@@ -1,11 +1,11 @@
-package com.someorg.fifteengame.services.impl;
+package com.someorg.fifteengame.repositories.impl;
 
 import com.someorg.fifteengame.common.MoveResult;
 import com.someorg.fifteengame.model.GameIdentifier;
 import com.someorg.fifteengame.model.domain.Game;
-import com.someorg.fifteengame.services.GameFactory;
-import com.someorg.fifteengame.services.GameRepository;
-import com.someorg.fifteengame.services.exceptions.GameAlreadyExistsException;
+import com.someorg.fifteengame.factories.GameFactory;
+import com.someorg.fifteengame.repositories.GameRepository;
+import com.someorg.fifteengame.repositories.exceptions.GameAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +21,7 @@ public class GameRepositoryImpl implements GameRepository {
 
     @Autowired
     public GameRepositoryImpl(GameFactory gameFactory) {
-        GAMES_MAP = new ConcurrentHashMap<>();
+        this.GAMES_MAP = new ConcurrentHashMap<>();
         this.gameFactory = gameFactory;
     }
 

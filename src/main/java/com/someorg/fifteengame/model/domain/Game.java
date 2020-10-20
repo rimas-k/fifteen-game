@@ -2,7 +2,7 @@ package com.someorg.fifteengame.model.domain;
 
 
 import com.someorg.fifteengame.common.MoveResult;
-import com.someorg.fifteengame.services.impl.GameFactoryImpl;
+import com.someorg.fifteengame.factories.impl.GameFactoryImpl;
 import lombok.Getter;
 
 import java.util.List;

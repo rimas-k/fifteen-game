@@ -1,7 +1,8 @@
-package com.someorg.fifteengame.services.impl;
+package com.someorg.fifteengame.factories.impl;
 
 import com.someorg.fifteengame.model.domain.Game;
 import com.someorg.fifteengame.model.domain.Tile;
+import com.someorg.fifteengame.factories.GameFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -9,7 +10,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Component
-public class GameFactoryImpl {
+public class GameFactoryImpl implements GameFactory {
 
     public static final String BLANK_TILE_LABEL = "_";
 
@@ -52,6 +53,7 @@ public class GameFactoryImpl {
                 tiles.add(tile);
             }
         }
+
         return tiles;
     }
 

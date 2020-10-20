@@ -1,4 +1,4 @@
-package com.someorg.fifteengame.services;
+package com.someorg.fifteengame.factories;
 
 import com.someorg.fifteengame.model.domain.Game;
 

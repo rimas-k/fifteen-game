@@ -1,9 +1,9 @@
-package com.someorg.fifteengame.services;
+package com.someorg.fifteengame.repositories;
 
 import com.someorg.fifteengame.common.MoveResult;
 import com.someorg.fifteengame.model.GameIdentifier;
 import com.someorg.fifteengame.model.domain.Game;
-import com.someorg.fifteengame.services.exceptions.GameAlreadyExistsException;
+import com.someorg.fifteengame.repositories.exceptions.GameAlreadyExistsException;
 
 public interface GameRepository {
 
