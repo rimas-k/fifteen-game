@@ -1,8 +1,8 @@
 package com.someorg.fifteengame.factories.impl;
 
+import com.someorg.fifteengame.factories.GameFactory;
 import com.someorg.fifteengame.model.domain.Game;
 import com.someorg.fifteengame.model.domain.Tile;
-import com.someorg.fifteengame.factories.GameFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -27,7 +27,7 @@ public class GameFactoryImpl implements GameFactory {
 
     private Queue<String> generateRandomTileLabels(int tilesCount) {
         LinkedList<String> tileLabels = IntStream
-                .range(1, tilesCount)
+                .rangeClosed(1, tilesCount)
                 .mapToObj(Integer::toString)
                 .collect(Collectors.toCollection(LinkedList::new));
 

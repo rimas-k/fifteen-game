@@ -1,8 +1,9 @@
 package com.someorg.fifteengame.services;
 
 import com.someorg.fifteengame.dto.CreateGameRequest;
-import com.someorg.fifteengame.dto.CreateGameResponse;
+import com.someorg.fifteengame.dto.domain.Game;
+import com.someorg.fifteengame.repositories.exceptions.GameAlreadyExistsException;
 
 public interface CreateGameService {
-    CreateGameResponse createGame(CreateGameRequest request);
+    Game createGame(CreateGameRequest request) throws GameAlreadyExistsException;
 }

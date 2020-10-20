@@ -3,6 +3,7 @@ package com.someorg.fifteengame.model.domain;
 
 import com.someorg.fifteengame.common.MoveResult;
 import com.someorg.fifteengame.factories.impl.GameFactoryImpl;
+import lombok.AccessLevel;
 import lombok.Getter;
 
 import java.util.List;
@@ -17,10 +18,10 @@ public class Game {
     @Getter
     private List<Tile> tiles;
 
-    @Getter
+    @Getter(AccessLevel.PROTECTED)
     private Map<String, Tile> tileLabelToTileMap;
 
-    @Getter
+    @Getter(AccessLevel.PROTECTED)
     private Map<Tile.Position, Tile> tilePositionToTileMap;
 
     public Game(int boardSize, List<Tile> tiles) {
@@ -32,7 +33,7 @@ public class Game {
     }
 
     public MoveResult moveTileIntoBlankPosition(String tileLabel) {
-        synchronized(this) {
+        synchronized (this) {
 
             Tile blankTile = tileLabelToTileMap.get(GameFactoryImpl.BLANK_TILE_LABEL);
             Tile.Position blankPosition = blankTile.getPosition();
@@ -109,7 +110,8 @@ public class Game {
         double distance = Math.sqrt(distanceSquareX + distanceSquareY);
         double epsilon = 1E-5;
 
-        boolean isNeighbour = distance - 1 < epsilon; // if the distance is exactly 1, then the tiles are switchable neighbours
+        // if the distance is exactly 1, then the tiles are switchable neighbours
+        boolean isNeighbour = distance - 1 < epsilon;
 
         return isNeighbour;
     }
