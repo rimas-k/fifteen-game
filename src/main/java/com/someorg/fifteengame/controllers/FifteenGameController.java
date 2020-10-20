@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class FifteenGameController {
 
     @PostMapping("/game")
-    public CreateGameResponse createGame(CreateGameRequest request){
+    public CreateGameResponse createGame(CreateGameRequest request) {
         return new CreateGameResponse();
     }
 

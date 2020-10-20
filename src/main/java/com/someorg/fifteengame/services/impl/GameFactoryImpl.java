@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Component
-public class GameFactory {
+public class GameFactoryImpl {
 
     public static final String BLANK_TILE_LABEL = "_";
 
@@ -19,9 +19,7 @@ public class GameFactory {
         Queue<String> tileLabels = generateRandomTileLabels(tilesCount);
         List<Tile> tiles = generateTiles(boardSize, tileLabels);
 
-        Game game = new Game();
-        game.setBoardSize(boardSize);
-        game.setTiles(tiles);
+        Game game = new Game(boardSize, tiles);
 
         return game;
     }
@@ -56,4 +54,5 @@ public class GameFactory {
         }
         return tiles;
     }
+
 }

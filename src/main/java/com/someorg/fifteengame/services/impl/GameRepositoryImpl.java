@@ -3,6 +3,7 @@ package com.someorg.fifteengame.services.impl;
 import com.someorg.fifteengame.common.MoveResult;
 import com.someorg.fifteengame.model.GameIdentifier;
 import com.someorg.fifteengame.model.domain.Game;
+import com.someorg.fifteengame.services.GameFactory;
 import com.someorg.fifteengame.services.GameRepository;
 import com.someorg.fifteengame.services.exceptions.GameAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class GameRepositoryImpl implements GameRepository {
     }
 
     @Override
-    public Game createGame(GameIdentifier gameIdentifier, int boardSize) throws GameAlreadyExistsException {
+    public synchronized Game createGame(GameIdentifier gameIdentifier, int boardSize) throws GameAlreadyExistsException {
         Map<String, Game> userGames = GAMES_MAP.get(gameIdentifier.getUserId());
 
         if (userGames == null) {
@@ -33,7 +34,7 @@ public class GameRepositoryImpl implements GameRepository {
             GAMES_MAP.put(gameIdentifier.getUserId(), userGames);
         }
 
-        if(userGames.containsKey(gameIdentifier.getGameId())) {
+        if (userGames.containsKey(gameIdentifier.getGameId())) {
             throw new GameAlreadyExistsException("Game with specified ID already exists.");
         }
 
@@ -45,11 +46,25 @@ public class GameRepositoryImpl implements GameRepository {
 
     @Override
     public Game fetchGame(GameIdentifier gameIdentifier) {
-        return null;
+        Game game = null;
+        Map<String, Game> userGames = GAMES_MAP.get(gameIdentifier.getUserId());
+
+        if (userGames != null) {
+            game = userGames.get(gameIdentifier.getGameId());
+        }
+
+        return game;
     }
 
     @Override
     public MoveResult moveTile(GameIdentifier gameIdentifier, String tileId) {
-        return null;
+        Game game = fetchGame(gameIdentifier);
+        MoveResult result = MoveResult.ILLEGAL_MOVE;
+
+        if(game != null) {
+            result = game.moveTileIntoBlankPosition(tileId);
+        }
+
+        return result;
     }
 }
