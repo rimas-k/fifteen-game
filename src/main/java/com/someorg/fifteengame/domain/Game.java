@@ -3,6 +3,7 @@ package com.someorg.fifteengame.domain;
 
 import com.someorg.fifteengame.common.MoveResult;
 import com.someorg.fifteengame.factories.GameFactory;
+import lombok.AccessLevel;
 import lombok.Getter;
 
 import java.util.List;
@@ -17,8 +18,10 @@ public class Game {
     @Getter
     private List<Tile> tiles;
 
+    @Getter(AccessLevel.PACKAGE)
     private Map<String, Tile> tileLabelToTileMap;
 
+    @Getter(AccessLevel.PACKAGE)
     private Map<Tile.Position, Tile> tilePositionToTileMap;
 
     @Getter
@@ -83,7 +86,7 @@ public class Game {
     }
 
     private String createTargetTileLabelByPosition(Tile.Position position) {
-        Integer targetTileLabelNumber = boardSize * position.getY() + position.getX();
+        Integer targetTileLabelNumber = boardSize * position.getY() + position.getX() + 1;
         return targetTileLabelNumber.toString();
     }
 

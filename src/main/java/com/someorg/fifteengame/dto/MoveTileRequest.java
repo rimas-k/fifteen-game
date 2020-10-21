@@ -17,5 +17,6 @@ public class MoveTileRequest {
     private String gameId;
 
     @NotBlank
+    @Pattern(regexp = RegexpConstants.NUMERIC)
     private String tileLabel;
 }
