@@ -25,6 +25,7 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -63,6 +64,7 @@ class FifteenGameApplicationIntegrationTest {
         Game fetchedGame = performFetchGameRequest(userId, gameId);
 
         assertThat(createdGame, is(fetchedGame));
+        assertFalse(fetchedGame.isGameComplete());
     }
 
     @Test
