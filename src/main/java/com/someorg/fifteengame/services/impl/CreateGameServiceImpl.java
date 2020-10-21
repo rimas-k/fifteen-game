@@ -1,8 +1,8 @@
 package com.someorg.fifteengame.services.impl;
 
-import com.someorg.fifteengame.dto.CreateGameRequest;
-import com.someorg.fifteengame.domain.GameIdentifier;
 import com.someorg.fifteengame.domain.Game;
+import com.someorg.fifteengame.domain.GameIdentifier;
+import com.someorg.fifteengame.dto.CreateGameRequest;
 import com.someorg.fifteengame.repositories.GameRepository;
 import com.someorg.fifteengame.services.CreateGameService;
 import com.someorg.fifteengame.services.util.DTOConverter;

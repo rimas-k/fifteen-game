@@ -1,9 +1,9 @@
 package com.someorg.fifteengame.services.impl;
 
 import com.someorg.fifteengame.common.MoveResult;
+import com.someorg.fifteengame.domain.GameIdentifier;
 import com.someorg.fifteengame.dto.MoveTileRequest;
 import com.someorg.fifteengame.dto.MoveTileResponse;
-import com.someorg.fifteengame.domain.GameIdentifier;
 import com.someorg.fifteengame.repositories.GameRepository;
 import com.someorg.fifteengame.services.MoveTileService;
 import org.springframework.beans.factory.annotation.Autowired;

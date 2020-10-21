@@ -1,9 +1,9 @@
 package com.someorg.fifteengame.validation.advice;
 
 
-import com.someorg.fifteengame.dto.domain.Game;
-import com.someorg.fifteengame.repositories.exceptions.GameAlreadyExistsException;
-import com.someorg.fifteengame.repositories.exceptions.GameNotFoundException;
+import com.someorg.fifteengame.exceptions.GameAlreadyExistsException;
+import com.someorg.fifteengame.exceptions.GameNotFoundException;
+import com.someorg.fifteengame.exceptions.GameTileNotFoundException;
 import com.someorg.fifteengame.validation.dto.GameExceptionResponse;
 import com.someorg.fifteengame.validation.dto.ValidationErrorResponse;
 import com.someorg.fifteengame.validation.dto.Violation;
@@ -21,6 +21,16 @@ import java.text.MessageFormat;
 
 @ControllerAdvice
 public class ExceptionHandlingControllerAdvice {
+
+    @ResponseBody
+    @ExceptionHandler(GameTileNotFoundException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public GameExceptionResponse onGameTileNotFoundException(GameTileNotFoundException exception) {
+        GameExceptionResponse response = new GameExceptionResponse();
+        response.setMessage("Invalid game tile to move.");
+
+        return response;
+    }
 
     @ResponseBody
     @ExceptionHandler(GameNotFoundException.class)

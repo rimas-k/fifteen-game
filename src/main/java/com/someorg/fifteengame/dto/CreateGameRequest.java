@@ -1,7 +1,6 @@
 package com.someorg.fifteengame.dto;
 
 import com.someorg.fifteengame.common.RegexpConstants;
-import jdk.nashorn.internal.runtime.regexp.joni.Regex;
 import lombok.Data;
 
 import javax.validation.constraints.Max;

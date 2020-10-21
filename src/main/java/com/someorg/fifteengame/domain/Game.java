@@ -2,6 +2,7 @@ package com.someorg.fifteengame.domain;
 
 
 import com.someorg.fifteengame.common.MoveResult;
+import com.someorg.fifteengame.exceptions.GameTileNotFoundException;
 import com.someorg.fifteengame.factories.GameFactory;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -42,6 +43,11 @@ public class Game {
             Tile.Position blankPosition = blankTile.getPosition();
 
             Tile requestedTile = tileLabelToTileMap.get(tileLabel);
+
+            if (requestedTile == null) {
+                throw new GameTileNotFoundException("Specified tile does not exist");
+            }
+
             Tile.Position requestedTilePosition = requestedTile.getPosition();
 
             boolean areNeighbours = areTilesNeighbours(blankPosition, requestedTilePosition);

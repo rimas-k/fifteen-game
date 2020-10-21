@@ -101,6 +101,24 @@ class FifteenGameApplicationIntegrationTest {
         assertThat(moveResult, is(MoveResult.ILLEGAL_MOVE));
     }
 
+    @Test
+    public void createGame_invalidTileLabel_Status400() throws Exception {
+        CreateGameRequest request = createCreateGameRequest(2, "userId1", "gameId4");
+        Game game = performCreateGameRequest(request);
+
+        MoveTileRequest moveTileRequest = new MoveTileRequest();
+        moveTileRequest.setUserId("userId1");
+        moveTileRequest.setGameId("gameId4");
+        moveTileRequest.setTileLabel("44");
+
+        mvc.perform(MockMvcRequestBuilders.post("/game/move")
+                .content(objectMapper.writeValueAsString(moveTileRequest))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+
     private String findValidTileLabelForMove(Game game) {
         List<Tile> tiles = game.getTiles();
 

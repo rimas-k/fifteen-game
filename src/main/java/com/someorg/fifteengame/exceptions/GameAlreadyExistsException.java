@@ -1,4 +1,4 @@
-package com.someorg.fifteengame.repositories.exceptions;
+package com.someorg.fifteengame.exceptions;
 
 public class GameAlreadyExistsException extends RuntimeException {
 

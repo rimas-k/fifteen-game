@@ -1,8 +1,8 @@
 package com.someorg.fifteengame.services.impl;
 
+import com.someorg.fifteengame.domain.GameIdentifier;
 import com.someorg.fifteengame.dto.FetchGameRequest;
 import com.someorg.fifteengame.dto.domain.Game;
-import com.someorg.fifteengame.domain.GameIdentifier;
 import com.someorg.fifteengame.repositories.GameRepository;
 import com.someorg.fifteengame.services.FetchGameService;
 import com.someorg.fifteengame.services.util.DTOConverter;

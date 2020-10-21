@@ -1,12 +1,12 @@
 package com.someorg.fifteengame.repositories.impl;
 
 import com.someorg.fifteengame.common.MoveResult;
-import com.someorg.fifteengame.factories.GameFactory;
-import com.someorg.fifteengame.domain.GameIdentifier;
 import com.someorg.fifteengame.domain.Game;
+import com.someorg.fifteengame.domain.GameIdentifier;
+import com.someorg.fifteengame.exceptions.GameAlreadyExistsException;
+import com.someorg.fifteengame.exceptions.GameNotFoundException;
+import com.someorg.fifteengame.factories.GameFactory;
 import com.someorg.fifteengame.repositories.GameRepository;
-import com.someorg.fifteengame.repositories.exceptions.GameAlreadyExistsException;
-import com.someorg.fifteengame.repositories.exceptions.GameNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

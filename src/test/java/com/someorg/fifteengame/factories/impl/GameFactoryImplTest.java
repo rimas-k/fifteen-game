@@ -8,10 +8,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertFalse;
 import static org.mockito.Mockito.spy;
-
-import static org.hamcrest.Matchers.is;
 
 public class GameFactoryImplTest {
 
