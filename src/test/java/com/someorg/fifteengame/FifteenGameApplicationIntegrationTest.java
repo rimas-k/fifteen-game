@@ -103,7 +103,7 @@ class FifteenGameApplicationIntegrationTest {
 
     @Test
     public void createGame_invalidTileLabel_Status400() throws Exception {
-        CreateGameRequest request = createCreateGameRequest(2, "userId1", "gameId4");
+        CreateGameRequest request = createCreateGameRequest(2, "userId1", "gameId5");
         Game game = performCreateGameRequest(request);
 
         MoveTileRequest moveTileRequest = new MoveTileRequest();
