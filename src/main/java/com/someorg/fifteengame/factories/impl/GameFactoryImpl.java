@@ -1,8 +1,8 @@
 package com.someorg.fifteengame.factories.impl;
 
 import com.someorg.fifteengame.factories.GameFactory;
-import com.someorg.fifteengame.model.Game;
-import com.someorg.fifteengame.model.Tile;
+import com.someorg.fifteengame.domain.Game;
+import com.someorg.fifteengame.domain.Tile;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -11,8 +11,6 @@ import java.util.stream.IntStream;
 
 @Component
 public class GameFactoryImpl implements GameFactory {
-
-    public static final String BLANK_TILE_LABEL = "_";
 
     public Game createRandomGame(int boardSize) {
         int tilesCount = boardSize * boardSize - 1;

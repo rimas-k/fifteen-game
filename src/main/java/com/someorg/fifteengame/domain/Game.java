@@ -1,8 +1,8 @@
-package com.someorg.fifteengame.model;
+package com.someorg.fifteengame.domain;
 
 
 import com.someorg.fifteengame.common.MoveResult;
-import com.someorg.fifteengame.factories.impl.GameFactoryImpl;
+import com.someorg.fifteengame.factories.GameFactory;
 import lombok.Getter;
 
 import java.util.List;
@@ -21,6 +21,9 @@ public class Game {
 
     private Map<Tile.Position, Tile> tilePositionToTileMap;
 
+    @Getter
+    private boolean isGameInCompleteState = false;
+
     public Game(int boardSize, List<Tile> tiles) {
         this.boardSize = boardSize;
         this.tiles = tiles;
@@ -32,7 +35,7 @@ public class Game {
     public MoveResult moveTileIntoBlankPosition(String tileLabel) {
         synchronized (this) {
 
-            Tile blankTile = tileLabelToTileMap.get(GameFactoryImpl.BLANK_TILE_LABEL);
+            Tile blankTile = tileLabelToTileMap.get(GameFactory.BLANK_TILE_LABEL);
             Tile.Position blankPosition = blankTile.getPosition();
 
             Tile requestedTile = tileLabelToTileMap.get(tileLabel);
@@ -49,8 +52,10 @@ public class Game {
 
                 if (isGameComplete) {
                     result = MoveResult.GAME_COMPLETE;
+                    isGameInCompleteState = true;
                 } else {
                     result = MoveResult.OK;
+                    isGameInCompleteState = false;
                 }
             }
 
@@ -65,7 +70,7 @@ public class Game {
             Tile.Position position = tile.getPosition();
             String tileLabel = tile.getTileLabel();
 
-            if (GameFactoryImpl.BLANK_TILE_LABEL.equals(tileLabel)) {
+            if (GameFactory.BLANK_TILE_LABEL.equals(tileLabel)) {
                 Tile.Position targetBlankPosition = createTargetBlankPosition();
                 isGameComplete = isGameComplete && targetBlankPosition.equals(position);
             } else {

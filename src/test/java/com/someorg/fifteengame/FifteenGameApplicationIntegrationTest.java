@@ -4,7 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.someorg.fifteengame.common.MoveResult;
 import com.someorg.fifteengame.dto.CreateGameRequest;
 import com.someorg.fifteengame.dto.MoveTileRequest;
+import com.someorg.fifteengame.dto.MoveTileResponse;
 import com.someorg.fifteengame.dto.domain.Game;
+import com.someorg.fifteengame.dto.domain.Tile;
+import com.someorg.fifteengame.factories.GameFactory;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +20,10 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.List;
+
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -25,16 +31,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @RunWith(SpringRunner.class)
-public class FifteenGameApplicationIntegrationTest {
+class FifteenGameApplicationIntegrationTest {
 
     @Autowired
     private MockMvc mvc;
 
     @Autowired
     private ObjectMapper objectMapper;
-
-//    @MockBean
-//    private GameFactory mockGameFactory;
 
     @Test
     public void createGame_validParams_returnsValidGame() throws Exception {
@@ -63,22 +66,87 @@ public class FifteenGameApplicationIntegrationTest {
     }
 
     @Test
-    public void createGame_oneValidMove_returnsGameCompleted() throws Exception {
-        setUpMocks();
+    public void createGame_oneValidMove_returnsMoveOK() throws Exception {
         CreateGameRequest request = createCreateGameRequest(2, "userId1", "gameId3");
         Game game = performCreateGameRequest(request);
+
+        String validTileLabelForMove = findValidTileLabelForMove(game);
 
         MoveTileRequest moveTileRequest = new MoveTileRequest();
         moveTileRequest.setUserId("userId1");
         moveTileRequest.setGameId("gameId3");
-        moveTileRequest.setTileLabel("3");
+        moveTileRequest.setTileLabel(validTileLabelForMove);
 
-        MoveResult moveResult = performMoveTileRequest(moveTileRequest);
+        MoveResult moveResult = performMoveTileRequest(moveTileRequest).getResult();
 
-//        assertThat(moveResult, is(MoveResult.OK));
+        assertThat(moveResult, anyOf(is(MoveResult.OK), is(MoveResult.GAME_COMPLETE)));
     }
 
-    private MoveResult performMoveTileRequest(MoveTileRequest moveTileRequest) throws Exception {
+    @Test
+    public void createGame_oneInValidMove_returnsMoveIllegal() throws Exception {
+        CreateGameRequest request = createCreateGameRequest(2, "userId1", "gameId4");
+        Game game = performCreateGameRequest(request);
+
+        String validTileLabelForMove = findInValidTileLabelForMove(game);
+
+        MoveTileRequest moveTileRequest = new MoveTileRequest();
+        moveTileRequest.setUserId("userId1");
+        moveTileRequest.setGameId("gameId4");
+        moveTileRequest.setTileLabel(validTileLabelForMove);
+
+        MoveResult moveResult = performMoveTileRequest(moveTileRequest).getResult();
+
+        assertThat(moveResult, is(MoveResult.ILLEGAL_MOVE));
+    }
+
+    private String findValidTileLabelForMove(Game game) {
+        List<Tile> tiles = game.getTiles();
+
+        Tile blankTile = findTileByLabel(tiles, GameFactory.BLANK_TILE_LABEL);
+
+        int maxPosCoordinate = game.getBoardSize() - 1;
+
+        //for simplicity, we're finding a neighbour horizontally, also handling the case if it is in a corner
+        int newY = blankTile.getPositionY() == maxPosCoordinate ? blankTile.getPositionY() - 1 : blankTile.getPositionY() + 1;
+        int newX = blankTile.getPositionX();
+
+        Tile targetTile = getTileByCoordinates(tiles, newY, newX);
+
+        return targetTile.getLabel();
+    }
+
+    private Tile getTileByCoordinates(List<Tile> tiles, int newY, int newX) {
+        return tiles.stream()
+                .filter(tile -> tile.getPositionX() == newX && tile.getPositionY() == newY)
+                .findAny()
+                .orElse(null);
+    }
+
+    private String findInValidTileLabelForMove(Game game) {
+        List<Tile> tiles = game.getTiles();
+
+        Tile blankTile = findTileByLabel(tiles, GameFactory.BLANK_TILE_LABEL);
+
+        int maxPosCoordinate = game.getBoardSize() - 1;
+
+        //for simplicity, we're finding a neighbour diagonally, also handling the case if it is in a corner
+        int newY = blankTile.getPositionY() == maxPosCoordinate ? blankTile.getPositionY() - 1 : blankTile.getPositionY() + 1;
+        int newX = blankTile.getPositionX() == maxPosCoordinate ? blankTile.getPositionX() - 1 : blankTile.getPositionX() + 1;
+
+        Tile targetTile = getTileByCoordinates(tiles, newY, newX);
+
+        return targetTile.getLabel();
+    }
+
+    private Tile findTileByLabel(List<Tile> tiles, String label) {
+        return tiles.stream()
+                .filter(tile -> label.equals(tile.getLabel()))
+                .findAny()
+                .orElse(null);
+    }
+
+
+    private MoveTileResponse performMoveTileRequest(MoveTileRequest moveTileRequest) throws Exception {
         ResultActions actions = mvc.perform(MockMvcRequestBuilders.post("/game/move")
                 .content(objectMapper.writeValueAsString(moveTileRequest))
                 .contentType(MediaType.APPLICATION_JSON))
@@ -88,15 +156,9 @@ public class FifteenGameApplicationIntegrationTest {
         MvcResult result = actions.andReturn();
         String contentAsString = result.getResponse().getContentAsString();
 
-        MoveResult response = objectMapper.readValue(contentAsString, MoveResult.class);
+        MoveTileResponse response = objectMapper.readValue(contentAsString, MoveTileResponse.class);
 
         return response;
-    }
-
-    private void setUpMocks() {
-//        when(mockGameFactory.createRandomGame(2))
-//                .thenReturn(new com.someorg.fifteengame.model.Game(2, NonRandomTileSetsForTests.BOARD_SIZE_2_ONE_STEP_TO_COMPLETION));
-
     }
 
     private CreateGameRequest createCreateGameRequest(int boardSize, String userId, String gameId) {
@@ -139,7 +201,6 @@ public class FifteenGameApplicationIntegrationTest {
 
         return response;
     }
-
 
 
 }

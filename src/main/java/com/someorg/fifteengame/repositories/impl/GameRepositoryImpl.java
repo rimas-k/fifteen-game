@@ -2,8 +2,8 @@ package com.someorg.fifteengame.repositories.impl;
 
 import com.someorg.fifteengame.common.MoveResult;
 import com.someorg.fifteengame.factories.GameFactory;
-import com.someorg.fifteengame.model.GameIdentifier;
-import com.someorg.fifteengame.model.Game;
+import com.someorg.fifteengame.domain.GameIdentifier;
+import com.someorg.fifteengame.domain.Game;
 import com.someorg.fifteengame.repositories.GameRepository;
 import com.someorg.fifteengame.repositories.exceptions.GameAlreadyExistsException;
 import com.someorg.fifteengame.repositories.exceptions.GameNotFoundException;

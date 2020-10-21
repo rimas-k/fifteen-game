@@ -1,6 +1,6 @@
 package com.someorg.fifteengame;
 
-import com.someorg.fifteengame.model.Tile;
+import com.someorg.fifteengame.domain.Tile;
 
 import java.util.Arrays;
 import java.util.List;

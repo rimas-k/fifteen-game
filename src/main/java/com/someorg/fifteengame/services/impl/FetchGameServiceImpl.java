@@ -2,7 +2,7 @@ package com.someorg.fifteengame.services.impl;
 
 import com.someorg.fifteengame.dto.FetchGameRequest;
 import com.someorg.fifteengame.dto.domain.Game;
-import com.someorg.fifteengame.model.GameIdentifier;
+import com.someorg.fifteengame.domain.GameIdentifier;
 import com.someorg.fifteengame.repositories.GameRepository;
 import com.someorg.fifteengame.services.FetchGameService;
 import com.someorg.fifteengame.services.util.DTOConverter;
@@ -29,7 +29,7 @@ public class FetchGameServiceImpl implements FetchGameService {
 
         GameIdentifier gameIdentifier = new GameIdentifier(userId, gameId);
 
-        com.someorg.fifteengame.model.Game game = gameRepository.fetchGame(gameIdentifier);
+        com.someorg.fifteengame.domain.Game game = gameRepository.fetchGame(gameIdentifier);
 
         Game gameDTO = dtoConverter.createGameDTO(game);
 

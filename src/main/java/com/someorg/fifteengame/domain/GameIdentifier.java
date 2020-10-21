@@ -1,4 +1,4 @@
-package com.someorg.fifteengame.model;
+package com.someorg.fifteengame.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

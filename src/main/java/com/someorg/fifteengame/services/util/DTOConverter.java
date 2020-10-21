@@ -1,7 +1,7 @@
 package com.someorg.fifteengame.services.util;
 
-import com.someorg.fifteengame.model.Game;
-import com.someorg.fifteengame.model.Tile;
+import com.someorg.fifteengame.domain.Game;
+import com.someorg.fifteengame.domain.Tile;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -25,6 +25,7 @@ public class DTOConverter {
         }
 
         gameDTO.setTiles(tileDTOs);
+        gameDTO.setGameComplete(game.isGameInCompleteState());
 
         return gameDTO;
     }
