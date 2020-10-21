@@ -1,7 +1,7 @@
 package com.someorg.fifteengame.services.util;
 
-import com.someorg.fifteengame.model.domain.Game;
-import com.someorg.fifteengame.model.domain.Tile;
+import com.someorg.fifteengame.model.Game;
+import com.someorg.fifteengame.model.Tile;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

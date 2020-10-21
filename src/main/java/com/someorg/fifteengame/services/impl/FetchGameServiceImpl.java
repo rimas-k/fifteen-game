@@ -29,7 +29,7 @@ public class FetchGameServiceImpl implements FetchGameService {
 
         GameIdentifier gameIdentifier = new GameIdentifier(userId, gameId);
 
-        com.someorg.fifteengame.model.domain.Game game = gameRepository.fetchGame(gameIdentifier);
+        com.someorg.fifteengame.model.Game game = gameRepository.fetchGame(gameIdentifier);
 
         Game gameDTO = dtoConverter.createGameDTO(game);
 

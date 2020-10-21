@@ -1,8 +1,8 @@
 package com.someorg.fifteengame.factories.impl;
 
 import com.someorg.fifteengame.factories.GameFactory;
-import com.someorg.fifteengame.model.domain.Game;
-import com.someorg.fifteengame.model.domain.Tile;
+import com.someorg.fifteengame.model.Game;
+import com.someorg.fifteengame.model.Tile;
 import org.springframework.stereotype.Component;
 
 import java.util.*;

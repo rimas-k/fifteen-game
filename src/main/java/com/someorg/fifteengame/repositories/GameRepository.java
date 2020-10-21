@@ -2,7 +2,7 @@ package com.someorg.fifteengame.repositories;
 
 import com.someorg.fifteengame.common.MoveResult;
 import com.someorg.fifteengame.model.GameIdentifier;
-import com.someorg.fifteengame.model.domain.Game;
+import com.someorg.fifteengame.model.Game;
 
 public interface GameRepository {
 

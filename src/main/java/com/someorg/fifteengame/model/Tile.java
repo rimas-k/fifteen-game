@@ -1,11 +1,13 @@
-package com.someorg.fifteengame.model.domain;
+package com.someorg.fifteengame.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Data
-@EqualsAndHashCode
+@AllArgsConstructor
+@NoArgsConstructor
 public class Tile {
 
     private Position position;

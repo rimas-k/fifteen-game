@@ -1,4 +1,4 @@
-package com.someorg.fifteengame.model.domain;
+package com.someorg.fifteengame.model;
 
 
 import com.someorg.fifteengame.common.MoveResult;
